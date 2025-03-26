@@ -38,6 +38,7 @@
 
 
 
+
     <!--Sezione Artisti-->
     <div id="artisti" style="background-image: url('assets/Structure/artisti.jpg');"
         class="bg-cover bg-center bg-no-repeat min-h-screen w-full relative py-24 ">
@@ -338,18 +339,21 @@
                   
                 </div>
 
-
-
                 <!-- Bottoni Auth in alto a destra -->
-                <form action="" class="absolute top-8 right-8 z-30 flex gap-4">
-                    <input type="submit" value="login" class="px-8 py-3 rounded-full bg-white/10 backdrop-blur-sm border-2 border-white/20 
-                      text-white font-semibold hover:bg-white/20 transition-all duration-300
-                      hover:scale-105 shadow-lg">
-
+                <form action="register.php" class="absolute top-8 right-40 z-30 flex gap-4">
                     <input type="submit" value="registrati" class="px-8 py-3 rounded-full bg-purple-600/80 backdrop-blur-sm border-2 border-white/20 
                       text-white font-semibold hover:bg-purple-600 transition-all duration-300
                       hover:scale-105 shadow-lg">
                 </form>
+
+                <form action="login.php" class="absolute top-8 right-8 z-30 flex gap-4">
+                    <input type="submit" value="login" class="px-8 py-3 rounded-full bg-white/10 backdrop-blur-sm border-2 border-white/20 
+                      text-white font-semibold hover:bg-white/20 transition-all duration-300
+                      hover:scale-105 shadow-lg">
+                </form>
+
+                
+                
 
             </div>
         </div>
