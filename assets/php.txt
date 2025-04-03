@@ -1,0 +1,25 @@
+<?php
+session_start();
+include '/backend/config.php';
+
+if (isset($_SESSION['user_id'])) {
+    $logged_in = true;
+    $username = $_SESSION['username'];
+} else {
+    $logged_in = false;
+}
+
+// Query per ottenere tutte le canzoni
+$query = "SELECT canzoni.titolo, canzoni.anno, artisti.nome AS artista 
+          FROM canzoni 
+          JOIN artisti ON canzoni.artista_id = artisti.id
+          ORDER BY canzoni.anno DESC";
+$stmt = $conn->prepare($query);
+$stmt->execute();
+$canzoni = $stmt->fetchAll(PDO::FETCH_ASSOC);
+?>
+
+
+
+
+absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2
