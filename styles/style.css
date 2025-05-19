@@ -1,0 +1,68 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Animazione per il titolo/logo */
+@keyframes slideFromBottom {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 30%, 0) scale3d(1, 1, 1);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale3d(1, 1, 1);
+  }
+}
+
+.animate-fade-in-scale {
+  animation: slideFromBottom 1.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  transform-style: preserve-3d;
+}
+
+/* Animazione per la barra di ricerca */
+@keyframes typingReverse {
+  from {
+    width: 0;
+    margin-left: 100%;
+  }
+  to {
+    width: 100%;
+    margin-left: 0;
+  }
+}
+
+
+.typing-text {
+  overflow: hidden;
+  white-space: nowrap;
+  width: 0;
+  animation: typingReverse 1.2s steps(30, end) forwards;
+  animation-delay: 0.2s;
+}
+
+.search-icon {
+  transform: translateX(100%);
+  animation: moveWithText 1.2s steps(30, end) forwards;
+  animation-delay: 0.2s;
+}
+
+@keyframes moveWithText {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+
+#scrollNav{
+     filter: drop-shadow(0 0 15px #b100e8);
+}
+#homeSearchResults {
+  position: absolute;
+  z-index: 1000;
+  margin-top: 1rem;
+}
+
+#searchResults, #homeSearchResults {
+  transition: opacity 0.3s, transform 0.3s;
+  transform-origin: top center;
+}
+
+
