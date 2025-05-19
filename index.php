@@ -1063,14 +1063,20 @@ session_start();
 
                 star.addEventListener('mouseout', function() {
                     // Ripristina il voto dell'utente dopo l'hover
-                    const currentRating = parseInt(rating.querySelector('.star.active')?.dataset.rating || 0);
-                    stars.forEach(s => {
-                        if (parseInt(s.dataset.rating) <= currentRating) {
-                            s.classList.add('active');
-                        } else {
-                            s.classList.remove('active');
-                        }
-                    });
+                    fetch(`backend/get_ratings.php?song_id=${songId}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success && data.user_rating) {
+                                stars.forEach(s => {
+                                    if (parseInt(s.dataset.rating) <= data.user_rating) {
+                                        s.classList.add('active');
+                                    } else {
+                                        s.classList.remove('active');
+                                    }
+                                });
+                            }
+                        })
+                        .catch(error => console.error('Errore nel ripristino delle stelle:', error));
                 });
             });
         });
