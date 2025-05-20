@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Creato il: Mar 20, 2025 alle 21:53
--- Versione del server: 10.4.28-MariaDB
--- Versione PHP: 8.2.4
+-- Host: 127.0.0.1
+-- Creato il: Mag 20, 2025 alle 08:01
+-- Versione del server: 10.4.32-MariaDB
+-- Versione PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `sanremo`
+-- Database: `sanremo_rating`
 --
 
 -- --------------------------------------------------------
@@ -303,23 +303,62 @@ INSERT INTO `canzoni` (`id`, `titolo`, `anno`, `artista_id`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Struttura della tabella `ratings`
+--
+
+CREATE TABLE `ratings` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `song_id` int(11) NOT NULL,
+  `rating` int(11) NOT NULL CHECK (`rating` >= 0 and `rating` <= 5),
+  `created_at` datetime DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dump dei dati per la tabella `ratings`
+--
+
+INSERT INTO `ratings` (`id`, `user_id`, `song_id`, `rating`, `created_at`) VALUES
+(1, 3, 37, 3, '2025-05-12 11:00:15'),
+(2, 3, 73, 2, '2025-05-12 11:00:18'),
+(3, 6, 37, 1, '2025-05-12 11:01:14'),
+(5, 6, 73, 5, '2025-05-12 11:01:20'),
+(6, 6, 2, 2, '2025-05-12 11:01:21'),
+(23, 7, 2, 4, '2025-05-19 20:31:26'),
+(26, 7, 37, 5, '2025-05-19 20:33:17'),
+(27, 7, 4, 3, '2025-05-19 20:33:18'),
+(29, 7, 8, 4, '2025-05-19 20:33:22'),
+(30, 7, 73, 4, '2025-05-19 20:33:23'),
+(31, 7, 6, 4, '2025-05-19 20:33:24'),
+(32, 7, 5, 3, '2025-05-19 20:33:25'),
+(33, 7, 9, 5, '2025-05-19 20:33:28'),
+(34, 7, 11, 2, '2025-05-19 20:33:29'),
+(35, 7, 12, 3, '2025-05-19 20:33:30'),
+(36, 7, 10, 1, '2025-05-19 20:33:32');
+
+-- --------------------------------------------------------
+
+--
 -- Struttura della tabella `utenti`
 --
 
 CREATE TABLE `utenti` (
   `id` int(11) NOT NULL,
   `username` varchar(50) NOT NULL,
+  `password` varchar(255) NOT NULL,
   `email` varchar(100) NOT NULL,
-  `password` varchar(255) NOT NULL
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dump dei dati per la tabella `utenti`
 --
 
-INSERT INTO `utenti` (`id`, `username`, `email`, `password`) VALUES
-(10, 'EdoardoMaggiani', 'edoardomaggiani00@gmail.com', '$2y$10$PR9A4PVqDh6kKMr94c/Zj.mRVLhv0BBOcyQ/UTROHa3EUsqg0C5Mi'),
-(11, 'piosamu', 'piosamu@gmail.com', '$2y$10$s0QUnzRo7TjnJJ7GWqixle2mY2p7ZLnxRQyQKazsnQV4SGAgpmuZO');
+INSERT INTO `utenti` (`id`, `username`, `password`, `email`, `created_at`) VALUES
+(3, 'edomaggia', '$2y$10$x1pYSXFXc6k2QZIYapN.D.wWT9O/R9p/dj7OzqEgrnfwRQ2NrreNq', 'edoardomaggiani00@gmail.com', '2025-05-11 17:45:55'),
+(4, 'ciao', '$2y$10$PZABPrGx089oAhq6w.q0UOAwK9Q459ASn0KQAHEYU0voGFHbrO7oO', 'ciao@ciao', '2025-05-11 20:02:10'),
+(6, 'gardanz', '$2y$10$Ac9D5cW14CQkD5Ulr464qeGw2hQo.jOElgYt/21wWFtOqua7KiUpq', 'gardanz@gas', '2025-05-12 09:01:11'),
+(7, 'maggias', '$2y$10$3mKHca.IfGWkmd6et5UqgukINKlc2ekel.l02a2lDMrXcVtrPwAoi', 'isfuari66@gmail.com', '2025-05-19 18:01:28');
 
 --
 -- Indici per le tabelle scaricate
@@ -338,6 +377,14 @@ ALTER TABLE `artisti`
 ALTER TABLE `canzoni`
   ADD PRIMARY KEY (`id`),
   ADD KEY `artista_id` (`artista_id`);
+
+--
+-- Indici per le tabelle `ratings`
+--
+ALTER TABLE `ratings`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `unique_rating` (`user_id`,`song_id`),
+  ADD KEY `song_id` (`song_id`);
 
 --
 -- Indici per le tabelle `utenti`
@@ -364,10 +411,16 @@ ALTER TABLE `canzoni`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=276;
 
 --
+-- AUTO_INCREMENT per la tabella `ratings`
+--
+ALTER TABLE `ratings`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
+
+--
 -- AUTO_INCREMENT per la tabella `utenti`
 --
 ALTER TABLE `utenti`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- Limiti per le tabelle scaricate
@@ -378,6 +431,13 @@ ALTER TABLE `utenti`
 --
 ALTER TABLE `canzoni`
   ADD CONSTRAINT `canzoni_ibfk_1` FOREIGN KEY (`artista_id`) REFERENCES `artisti` (`id`) ON DELETE CASCADE;
+
+--
+-- Limiti per la tabella `ratings`
+--
+ALTER TABLE `ratings`
+  ADD CONSTRAINT `ratings_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `utenti` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `ratings_ibfk_2` FOREIGN KEY (`song_id`) REFERENCES `canzoni` (`id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
