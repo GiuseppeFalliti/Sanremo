@@ -1,6 +1,6 @@
 # Sanremo Web Application
 
-Un'applicazione web moderna per la gestione e la visualizzazione del Festival di Sanremo.
+landing page moderna del Festival di Sanremo.
 
 ## Caratteristiche
 
