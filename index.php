@@ -18,7 +18,7 @@ session_start();
             0% {
                 opacity: 0;
                 transform: scale(0.8);
-            }s
+            }
 
             100% {
                 opacity: 1;

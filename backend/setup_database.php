@@ -2,7 +2,8 @@
 require_once 'config.php';
 
 // Query per creare le tabelle
-$queries = [   
+$queries = [
+    
     // Tabella ratings per i voti delle canzoni
     "CREATE TABLE IF NOT EXISTS ratings (
         id INT AUTO_INCREMENT PRIMARY KEY,
