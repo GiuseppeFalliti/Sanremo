@@ -89,7 +89,7 @@ if (isset($_GET['query'])) {
             $resultArtistSongs = $stmtArtistSongs->get_result();
             $artistSongs = [];
             while ($row = $resultArtistSongs->fetch_array(MYSQLI_NUM)) {
-                $artistSongs[] = $row[0];
+                $artistSongs[] = $row[0]; //aggiunge il titolo della canzone all'array 
             }
             
             // Formatta i risultati degli artisti

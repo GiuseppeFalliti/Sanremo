@@ -563,19 +563,18 @@ session_start();
 
     <!--Script per gestire lo scroll-->
     <script>
-        const nav = document.getElementById('scrollNav');
-        /*const motore_ricerca = document.getElementById('motore_ricerca');*/
+        const nav = document.getElementById('scrollNav'); 
         const logo = document.getElementById('logo');
         const sezioneArtisti = document.getElementById('artisti');
         const home = document.getElementById('home');
         let hasAutoScrolled = false; // Flag per tracciare se lo scroll automatico è già avvenuto
 
         window.addEventListener('scroll', () => {
-            const logoTop = logo.offsetTop; // Posizione del logo(ottengo la distanza tra la barra di ricerca e il top della pagina)
+            const logoTop = logo.offsetTop; // Posizione del logo(ottengo la distanza tra il logo e il top della pagina)
             const scrollPosition = window.scrollY; // Posizione dello scroll in verticale
             const homeBottom = home.offsetHeight; // Altezza totale della sezione home
 
-            // verifica se l'utente ha scrollato oltre la barra di ricerca (con un margine di 100px)
+            // verifica se l'utente ha scrollato oltre il logo (con un margine di 100px)
             if (scrollPosition >= logoTop - 100) {
                 // Mostra la navbar
                 nav.classList.remove('-translate-y-full', 'hidden');
@@ -585,15 +584,16 @@ session_start();
                 if (!hasAutoScrolled) {
                     hasAutoScrolled = true; // Impostiamo il flag
 
-                    // Scroll automatico verso la sezione artisti con animazione smooth
+                    // metodo che fa scorrere la pagina verso la sezione artisti
                     sezioneArtisti.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
+                        behavior: 'smooth', //crea un animazione fluida di scorrimento
+                        block: 'start' //il contenuto viene posizionato all'inizio della sezione
                     });
                 }
-            } else { // Se siamo sopra il motore di ricerca
+            } else { // Se siamo sopra il logo
                 // Nascondi la navbar
                 nav.classList.add('-translate-y-full');
+                //metodo che permette di eseguire il codice(che nasconde la navbar) dopo un certo periodo di tempo
                 setTimeout(() => {
                     if (nav.classList.contains('-translate-y-full')) {
                         nav.classList.add('hidden');
@@ -646,14 +646,9 @@ session_start();
             </div>
         `;
 
-                //Click event per il titolo della canzone/ dettagli
-                item.querySelector('.flex-1').addEventListener('click', () => {
-                    window.location.href = `song.php?id=${result.id}`;
-                });
-
                 // Click event per YouTube button
                 item.querySelector('.youtube-btn').addEventListener('click', (e) => {
-                    e.stopPropagation();
+                    e.stopPropagation(); //prende il click sull'elemento e non lo propaga al genitore/i
                     const searchQuery = `${result.title} ${result.artist} sanremo`;
                     window.open(`https://www.youtube.com/results?search_query=${encodeURIComponent(searchQuery)}`, '_blank');
                 });
@@ -673,14 +668,9 @@ session_start();
             </div>
         `;
 
-                // Click event per il nome dell'artista/dettagli
-                item.querySelector('.flex-1').addEventListener('click', () => {
-                    window.location.href = `artist.php?id=${result.id}`;
-                });
-
                 // Click event per YouTube button
                 item.querySelector('.youtube-btn').addEventListener('click', (e) => {
-                    e.stopPropagation();
+                    e.stopPropagation(); //prende il click sull'elemento e non lo propaga al genitore/i
                     const searchQuery = `${result.name} sanremo`;
                     window.open(`https://www.youtube.com/results?search_query=${encodeURIComponent(searchQuery)}`, '_blank');
                 });
@@ -689,7 +679,7 @@ session_start();
             return item;
         }
 
-        // Funzione per mostrare i messaggi di feedback
+        // Funzione per mostrare i messaggi di feedback (successo o errore)
         function showMessage(message, type) {
             const messageDiv = document.createElement('div');
             messageDiv.className = `fixed top-4 right-4 p-4 rounded-lg ${
@@ -701,7 +691,7 @@ session_start();
             
             setTimeout(() => {
                 messageDiv.remove();
-            }, 3000);
+            }, 3000); //rimuove il messaggio dopo 3 secondi
         }
 
         // Funzione per effettuare la richiesta di ricerca
@@ -770,6 +760,7 @@ session_start();
             }
         });
     </script>
+    
 
 
      <!-- Sezione About -->
