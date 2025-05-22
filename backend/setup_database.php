@@ -2,29 +2,7 @@
 require_once 'config.php';
 
 // Query per creare le tabelle
-$queries = [
-    // Tabella favorites
-    "CREATE TABLE IF NOT EXISTS favorites (
-        id INT AUTO_INCREMENT PRIMARY KEY,
-        user_id INT NOT NULL,
-        song_id INT NOT NULL,
-        created_at DATETIME NOT NULL,
-        FOREIGN KEY (user_id) REFERENCES utenti(id) ON DELETE CASCADE,
-        FOREIGN KEY (song_id) REFERENCES canzoni(id) ON DELETE CASCADE,
-        UNIQUE KEY unique_favorite (user_id, song_id)
-    )",
-    
-    // Tabella favorite_artists
-    "CREATE TABLE IF NOT EXISTS favorite_artists (
-        id INT AUTO_INCREMENT PRIMARY KEY,
-        user_id INT NOT NULL,
-        artist_id INT NOT NULL,
-        created_at DATETIME NOT NULL,
-        FOREIGN KEY (user_id) REFERENCES utenti(id) ON DELETE CASCADE,
-        FOREIGN KEY (artist_id) REFERENCES artisti(id) ON DELETE CASCADE,
-        UNIQUE KEY unique_favorite_artist (user_id, artist_id)
-    )",
-
+$queries = [   
     // Tabella ratings per i voti delle canzoni
     "CREATE TABLE IF NOT EXISTS ratings (
         id INT AUTO_INCREMENT PRIMARY KEY,
