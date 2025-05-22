@@ -1,5 +1,5 @@
 <?php
-require_once 'config.php';
+include 'config.php';
 
 // Query per creare le tabelle
 $queries = [
@@ -9,15 +9,13 @@ $queries = [
         username VARCHAR(50) NOT NULL,
         password VARCHAR(255) NOT NULL,
         email VARCHAR(100) NOT NULL,
-        created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
-        UNIQUE KEY unique_username (username)
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP
     )",
 
     //Tabella artisti
     "CREATE TABLE IF NOT EXISTS artisti (
         id INT AUTO_INCREMENT PRIMARY KEY,
-        nome VARCHAR(50) NOT NULL,
-        UNIQUE KEY unique_nome (nome)
+        nome VARCHAR(50) NOT NULL
     )",
 
     //Tabella canzoni
@@ -37,8 +35,7 @@ $queries = [
         rating INT NOT NULL CHECK (rating >= 0 AND rating <= 5),
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
         FOREIGN KEY (user_id) REFERENCES utenti(id) ON DELETE CASCADE,
-        FOREIGN KEY (song_id) REFERENCES canzoni(id) ON DELETE CASCADE,
-        UNIQUE KEY unique_rating (user_id, song_id)
+        FOREIGN KEY (song_id) REFERENCES canzoni(id) ON DELETE CASCADE
     )"
 ];
 

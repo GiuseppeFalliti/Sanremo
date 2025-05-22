@@ -34,6 +34,7 @@ try {
         }
     }
     
+    //metodo per inviare i risultati in formato json al frontend
     echo json_encode([
         'success' => true,
         'average_rating' => $result['average_rating'] ? round($result['average_rating'], 1) : 0,

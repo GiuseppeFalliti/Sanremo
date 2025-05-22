@@ -3,8 +3,7 @@
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: GET, POST");
 header("Access-Control-Allow-Headers: Content-Type");
-// Imposta il tipo di risposta come JSON
-header('Content-Type: application/json');
+header('Content-Type: application/json'); // Imposta il tipo di risposta come JSON
 
 // Registra una funzione che viene eseguita alla chiusura dello script
 // Gestisce gli errori fatali e li converte in risposte JSON
@@ -21,8 +20,9 @@ register_shutdown_function(function() {
 
 // Inizializza la sessione PHP
 session_start();
-// Includi configurazione database
+
 include 'config.php';
+
 // Configurazione della gestione errori
 error_reporting(E_ALL);
 ini_set('display_errors', 1);

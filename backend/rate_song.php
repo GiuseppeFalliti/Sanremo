@@ -47,7 +47,7 @@ try {
         echo json_encode([
             'success' => true, 
             'message' => 'Voto registrato con successo',
-            'average_rating' => round($result['average_rating'], 1),
+            'average_rating' => round($result['average_rating'], 1), 
             'total_ratings' => $result['total_ratings']
         ]);
     } else {

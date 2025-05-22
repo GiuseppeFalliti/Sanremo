@@ -13,7 +13,7 @@ if (isset($_SESSION['user_id'])) {
     exit();
 } 
 
-// Verifica se la richiesta è di tipo POST (form submission)
+// Verifica se la richiesta è di tipo POST 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     
     // Controlla se sono stati inviati sia username che password
