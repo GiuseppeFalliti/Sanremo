@@ -1083,62 +1083,7 @@ session_start();
     });
 </script>
 
-<!-- Script per gestire i preferiti -->
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    const favoriteButtons = document.querySelectorAll('.favorite-button');
-    
-    // Funzione per aggiornare l'aspetto del pulsante preferiti
-    function updateFavoriteButton(button, isFavorite) {
-        const heartIcon = button.querySelector('img');
-        heartIcon.src = isFavorite ? 'assets/heart_filled.svg' : 'assets/heart_outline.svg';
-        button.classList.toggle('bg-red-500/20', isFavorite);
-    }
 
-    // Carica lo stato iniziale dei preferiti
-    favoriteButtons.forEach(button => {
-        const songId = button.dataset.songId;
-        fetch(`backend/check_favorite.php?song_id=${songId}`)
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    updateFavoriteButton(button, data.is_favorite);
-                }
-            })
-            .catch(error => console.error('Errore nel caricamento dei preferiti:', error));
-    });
-
-    // Gestione del click sul pulsante preferiti
-    favoriteButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            const songId = this.dataset.songId;
-            
-            fetch('backend/toggle_favorite.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                },
-                body: `song_id=${songId}`
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    updateFavoriteButton(this, data.is_favorite);
-                    // Mostra un messaggio di feedback
-                    const message = data.is_favorite ? 'Aggiunto ai preferiti' : 'Rimosso dai preferiti';
-                    showMessage(message, 'success');
-                } else {
-                    showMessage(data.message || 'Errore durante l\'operazione', 'error');
-                }
-            })
-            .catch(error => {
-                console.error('Errore durante l\'operazione:', error);
-                showMessage('Errore durante l\'operazione', 'error');
-                });
-            });
-        });
-    });
-</script>
 
 </body>
 

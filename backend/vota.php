@@ -10,6 +10,7 @@ $user_id = $_SESSION['user_id'];
 $song_id = $_POST['song_id'];
 $rating = $_POST['rating'];
 
+//query per inserire/aggiornare il voto
 $query = "INSERT INTO feedback (user_id, song_id, rating) VALUES (:user_id, :song_id, :rating)
 ON DUPLICATE KEY UPDATE rating = :rating";
 
