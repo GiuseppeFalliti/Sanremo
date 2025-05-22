@@ -42,15 +42,4 @@ $queries = [
     )"
 ];
 
-// Esegui le query
-foreach ($queries as $query) {
-    if ($conn->query($query) === TRUE) {
-        echo "Query eseguita con successo: " . substr($query, 0, 50) . "...<br>";
-    } else {
-        echo "Errore nell'esecuzione della query: " . $conn->error . "<br>";
-    }
-}
-
-$conn->close();
-echo "Setup del database completato!";
 ?> 
