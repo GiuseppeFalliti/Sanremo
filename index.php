@@ -700,11 +700,10 @@ session_start();
                 const response = await fetch(`backend/search.php?query=${encodeURIComponent(query)}`);
 
                 if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
+                    throw new Error(`HTTP error: ${response.status}`);
                 }
 
                 const data = await response.json(); // Risposta JSON dalla API
-                console.log('API Response:', data); // Debug
 
                 if (!data.success) {
                     throw new Error(data.error || 'Errore nella ricerca');
@@ -719,7 +718,7 @@ session_start();
 
         // Funzione per gestire la ricerca
         const handleSearch = async (e) => {
-            const query = e.target.value.trim(); // Query della ricerca
+            const query = e.target.value.trim(); // Query di ricerca
 
             // Se la query è vuota o troppo corta, nascondi i risultati
             if (query.length < 2) {
@@ -732,6 +731,7 @@ session_start();
                 const resultsContainer = searchResults.querySelector('.p-4'); // Contenitore dei risultati
                 resultsContainer.innerHTML = ''; // Pulizia dei risultati precedenti
 
+                // Se non ci sono risultati o non ci sono risultati(confrontanto sia il contenuto che il tipo)
                 if (!results || results.length === 0) {
                     resultsContainer.innerHTML = '<p class="text-black text-center">Nessun risultato trovato</p>';
                 } else {
@@ -886,6 +886,7 @@ session_start();
             return title.replace(/\s+/g, '_').replace(/\.mp3$/, '') + '.mp3';
         }
 
+        // Aggiunge un listener a tutti i bottoni di play
         playButtons.forEach(button => {
             button.addEventListener('click', function() {
                 const songTitle = this.closest('.group').querySelector('h3').textContent;
@@ -967,7 +968,7 @@ session_start();
 
         // Carica i voti esistenti per ogni canzone
         starRatings.forEach(rating => {
-            const songId = rating.dataset.songId;
+            const songId = rating.dataset.songId; //ID della canzone
             fetch(`backend/get_ratings.php?song_id=${songId}`)
                 .then(response => response.json())
                 .then(data => {
