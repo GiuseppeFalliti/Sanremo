@@ -1,53 +1,3 @@
-<?php
-session_start();
-require_once 'backend/config.php';
-
-// Se l'utente è già loggato, reindirizza alla home
-if (isset($_SESSION['user_id'])) {
-    header('Location: index.php');
-    exit;
-}
-
-$error = '';
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $username = $_POST['username'] ?? '';
-    $email = $_POST['email'] ?? '';
-    $password = $_POST['password'] ?? '';
-    $confirm_password = $_POST['confirm_password'] ?? '';
-
-    if (empty($username) || empty($email) || empty($password) || empty($confirm_password)) {
-        $error = 'Per favore compila tutti i campi';
-    } elseif ($password !== $confirm_password) {
-        $error = 'Le password non coincidono';
-    } elseif (strlen($password) < 8) {
-        $error = 'La password deve essere di almeno 8 caratteri';
-    } else {
-        // Verifica se l'username o l'email sono già in uso
-        $stmt = $conn->prepare("SELECT id FROM utenti WHERE username = ? OR email = ?");
-        $stmt->bind_param("ss", $username, $email);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        
-        if ($result->num_rows > 0) {
-            $error = 'Username o email già in uso';
-        } else {
-            // Crea il nuovo utente
-            $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-            $stmt = $conn->prepare("INSERT INTO utenti (username, email, password) VALUES (?, ?, ?)");
-            $stmt->bind_param("sss", $username, $email, $hashed_password);
-            
-            if ($stmt->execute()) {
-                $_SESSION['user_id'] = $stmt->insert_id;
-                header('Location: index.php');
-                exit;
-            } else {
-                $error = 'Errore durante la registrazione';
-            }
-        }
-    }
-}
-?>
 
 <!DOCTYPE html>
 <html lang="it">
@@ -63,13 +13,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="bg-white/10 backdrop-blur-sm rounded-xl border-2 border-white/20 p-8">
             <h1 class="text-3xl font-bold text-white mb-8 text-center">Registrazione</h1>
             
-            <?php if ($error): ?>
-            <div class="bg-red-500/20 border border-red-500 text-white px-4 py-3 rounded-lg mb-6">
-                <?php echo htmlspecialchars($error); ?>
-            </div>
-            <?php endif; ?>
-
-            <form method="POST" class="space-y-6">
+            
+            <form method="POST" class="space-y-6" action="backend/register.php">
                 <div>
                     <label for="username" class="block text-white mb-2">Username</label>
                     <input type="text" id="username" name="username" required
